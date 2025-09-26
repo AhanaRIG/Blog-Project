@@ -30,18 +30,20 @@ function App() {
   
 
   return !loading ? 
-  (<div
-  className = "min-h-screen bg-gray-400 flex flex-wrap content-between">
-    <div className="w-full block">
+  (<div className="bg-opacity-85 min-h-screen bg-zinc-900 flex flex-wrap content-between">
+    <div className='w-full block'>
       <Header/>
       <main>
-        {/* ToDo:  */}
+        {/* TODO: <Outlet/> */}
         <Outlet/>
       </main>
       <Footer/>
     </div>
+  </div>) 
+  : 
+  (<div>
+
   </div>)
-  : <div></div>
 }
 
 export default App

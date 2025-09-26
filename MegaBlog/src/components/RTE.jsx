@@ -23,6 +23,9 @@ export default function RTE({name, control,
                 <Editor
                     initialValue={defaultValue}
                     init = {{
+                        selector: 'textarea', // Your selector here
+                        skin: 'oxide-dark',    // Applies the dark skin
+                        content_css: 'dark',    // Applies the dark content styles
                         initialValue:defaultValue,
                         height:500,
                         menubar:true,

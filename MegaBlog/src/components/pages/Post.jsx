@@ -64,11 +64,11 @@ export default function Post() {
             </div>
 
             <div className="w-full mb-6">
-                <h1 className="text-2xl font-bold">
+                <h1 className="text-2xl font-bold text-yellow-200">
                     {post.title}
                 </h1>
             </div>
-            <div className="browser-css">
+            <div className="browser-css text-red-500 font-semibold">
                 {parse(post.content)}
             </div>
         </Container>
