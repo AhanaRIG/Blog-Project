@@ -8,17 +8,30 @@ import { useSelector } from "react-redux";
 export default function Post() {
   const [post, setPost] = useState(null);
   const {slug} = useParams();
-//   console.log("lug2 is",slug)
+//   console.log("slug2 is",slug)
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
   const isAuthor = post && userData ? post.userId === userData.$id : false;
+    // on the very 1st render, the post of useState has not been populated by getPost().
+    // for this reason, isAuthor is still false
+    // therefore, edit and delete buttons are not renderdered on 1st render.
 
+    useEffect(() => {
+        // window.location.reload()
+        console.log("Useeffect")
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    },[])
+
+    
   useEffect(() => {
+    // window.location.reload() #infinite loop
     if(slug){
-        // console.log("lug is",slug)
+        // console.log("slug is",slug)
+
         appwriteService.getPost(slug).then((post) => {
             if (post){
                 setPost(post)
+                // window.location.reload(); #infinite loop
             }
             else{
                 navigate("/")

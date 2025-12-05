@@ -1,40 +1,45 @@
-import {useDispatch} from "react-redux"
-import React,{ useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useDispatch } from "react-redux"
+import authService from './appwrite/auth';
 import './App.css'
-import authService from "./appwrite/auth"
-import { login, logout } from "./store/authSlice"
-import { Footer, Header } from "./components/index"
-import {Outlet} from "react-router-dom" 
-function App() {
+import {login, logout} from "./store/authSlice" 
+import {Header, Footer} from "./components/index" 
+import {Outlet} from "react-router-dom"
+import { ToastContainer } from 'react-toastify';
 
-  const [loading, setLoading] = useState(true)
+
+function App() {
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    authService.getCurrentUser() //can use then after promise
-    .then( (userData) => {
-      if (userData) {
+    authService.getCurrentUser()
+    .then((userData) => {
+      if (userData){
         dispatch(login({userData}))
+        
       }
-      else {
+      else{
         dispatch(logout())
       }
-    }
+    })
+    .catch((error)=>{
+      console.log("App.jsx :: useEffect :: error: ",error)
+    })
+    .finally( ()=>setLoading(false)
     )
-    .catch( (err) => 
-      console.log("App.jsx :: UseEffect :: Error",err)
-    )
-    .finally( () => setLoading(false))
-  
+
   }, [])
   
 
+
   return !loading ? 
-  (<div className="bg-opacity-85 min-h-screen bg-zinc-900 flex flex-wrap content-between">
+  (<div className="bg-opacity-50 min-h-screen bg-zinc-900 flex flex-wrap content-between">
     <div className='w-full block'>
       <Header/>
       <main>
         {/* TODO: <Outlet/> */}
+        <ToastContainer/>
         <Outlet/>
       </main>
       <Footer/>
