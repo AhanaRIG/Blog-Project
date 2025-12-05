@@ -13,6 +13,9 @@ import EditPost from "./components/pages/EditPost.jsx"
 import Post from "./components/pages/Post.jsx"
 import AllPosts from "./components/pages/AllPosts.jsx"
 
+
+//authentication is set to false by default when a page should strictly be shown to a user if he/she is not logged in otherwise the default value of authenticaion is set to true inside of AuthlLayout.jsx
+
 const router = createBrowserRouter([
   {
     path : "/",
@@ -72,6 +75,8 @@ const router = createBrowserRouter([
     ]
   }
 ])
+
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
