@@ -20,7 +20,7 @@ export default function PostForm({ post }) {
 
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
-//   console.log("userdata", userData)
+    //console.log("userdata", userData)
 
   const submit = async (data) => {
     setIsSubmitting(true);

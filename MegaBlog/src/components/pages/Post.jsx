@@ -7,85 +7,85 @@ import { useSelector } from "react-redux";
 
 export default function Post() {
   const [post, setPost] = useState(null);
-  const {slug} = useParams();
-//   console.log("slug2 is",slug)
+  const { slug } = useParams();
+  //   console.log("slug2 is",slug)
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
-  const isAuthor = post && userData ? post.userId === userData.$id : false;
-    // on the very 1st render, the post of useState has not been populated by getPost().
-    // for this reason, isAuthor is still false
-    // therefore, edit and delete buttons are not renderdered on 1st render.
 
-    useEffect(() => {
-        // window.location.reload()
-        console.log("Useeffect")
-        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-    },[])
+//   const isAuthor = post && userData ? post.userId === userData.$id : false;
 
-    
+  const isAuthor = post && userData?.userData
+  ? post.userId === userData.userData.$id
+  : false;
+
+  // on the very 1st render, the post of useState has not been populated by getPost().
+  // for this reason, isAuthor is still false
+  // therefore, edit and delete buttons are not renderdered on 1st render.
+
+  useEffect(() => {
+    // window.location.reload()
+    console.log("Useeffect");
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+
   useEffect(() => {
     // window.location.reload() #infinite loop
-    if(slug){
-        // console.log("slug is",slug)
+    if (slug) {
+      // console.log("slug is",slug)
 
-        appwriteService.getPost(slug).then((post) => {
-            if (post){
-                setPost(post)
-                // window.location.reload(); #infinite loop
-            }
-            else{
-                navigate("/")
-            }
-        })
+      appwriteService.getPost(slug).then((post) => {
+        if (post) {
+          setPost(post);
+          // window.location.reload(); #infinite loop
+        } else {
+          navigate("/");
+        }
+      });
+    } else {
+      navigate("/");
     }
-    else{
-        navigate("/")
-    }
-  },[slug, navigate])
+  }, [slug, navigate]);
 
   const deletePost = () => {
-    appwriteService.deletePost(post.$id).then((status)=> {
-        if(status){
-            appwriteService.deleteFile(post.featuredImage);
-            navigate("/")
-        }
-    })
-  }
+    appwriteService.deletePost(post.$id).then((status) => {
+      if (status) {
+        appwriteService.deleteFile(post.featuredImage);
+        navigate("/");
+      }
+    });
+  };
 
   return post ? (
     <div className="py-8">
-        <Container>
-            <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
-                <img
-                    src = {appwriteService.getFilePreview(post.featuredImage)}
-                    alt = {post.title}
-                    className="rounded-xl"
-                />
+      <Container>
+        <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
+          <img
+            src={appwriteService.getFilePreview(post.featuredImage)}
+            alt={post.title}
+            className="rounded-xl"
+          />
 
-                {isAuthor && (
-                    <div className="absolute right-6 top-6">
-                        <Link to={`/edit-post/${post.$id}`}>
-                            <Button bgColor="bg-green-500" className="mr-3">
-                                Edit
-                            </Button>
-                        </Link>
-                        <Button bgColor="bg-red-500" onClick={deletePost}>
-                            Delete
-                        </Button>
-                    </div>
-                )}
+          {isAuthor && (
+            <div className="absolute right-6 top-6">
+              <Link to={`/edit-post/${post.$id}`}>
+                <Button bgColor="bg-green-500" className="mr-3">
+                  Edit
+                </Button>
+              </Link>
+              <Button bgColor="bg-red-500" onClick={deletePost}>
+                Delete
+              </Button>
             </div>
+          )}
+        </div>
 
-            <div className="w-full mb-6">
-                <h1 className="text-2xl font-bold text-yellow-200">
-                    {post.title}
-                </h1>
-            </div>
-            <div className="browser-css text-red-500 font-semibold">
-                {parse(post.content)}
-            </div>
-        </Container>
+        <div className="w-full mb-6">
+          <h1 className="text-2xl font-bold text-yellow-200">{post.title}</h1>
+        </div>
+        <div className="browser-css text-red-500 font-semibold">
+          {parse(post.content)}
+        </div>
+      </Container>
     </div>
-  )
-  : null;
+  ) : null;
 }
