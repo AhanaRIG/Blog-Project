@@ -20,6 +20,7 @@ export default function PostForm({ post }) {
 
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
+//   console.log("userdata", userData)
 
   const submit = async (data) => {
     setIsSubmitting(true);
@@ -50,6 +51,7 @@ export default function PostForm({ post }) {
           ...data,
           userId: userData.$id,
         });
+        console.log("           ",userData.$id)
 
         if (dbPost) {
           navigate(`/post/${dbPost.$id}`);
