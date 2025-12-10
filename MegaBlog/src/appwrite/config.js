@@ -156,6 +156,20 @@ export class Service{
             console.log("Appwrite Service :: getFileByUserId :: error: ",error)
         }
     }
+
+    async getFullNameByUserId(userId){
+        try {
+            const doc = await this.databases.getDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionIdUserInfo,
+                userId
+            )
+            return doc.fullName
+
+        } catch (error) {
+            console.log("Appwrite Service :: getFullNameByUserId :: error: ",error)
+        }
+    }
 }
 
 

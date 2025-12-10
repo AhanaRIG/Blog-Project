@@ -1,9 +1,10 @@
 import conf from "../conf/conf";
-import { Client, Account, ID } from "appwrite";
+import { Client, Account, ID, Databases } from "appwrite";
 
 export class AuthService {
     client = new Client();
     account;
+    databases
 
     constructor() {
         this.client
@@ -11,6 +12,7 @@ export class AuthService {
             .setProject(conf.appwriteProjectId);
             // .setEndpoint(conf.appwriteUrl)
         this.account = new Account(this.client);
+        this.databases = new Databases(this.client);
     }
 
     async createAccount({email,password,name}){
@@ -62,6 +64,26 @@ export class AuthService {
             console.log("Appwrite Service:: Logout :: error:",err);
         }
     }
+
+    async addUserToDatabase(userId, fullName, email) {
+        try {
+            return await this.databases.createDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionIdUserInfo,
+                userId,
+                {
+                    userId,
+                    fullName,
+                    email
+                }
+
+            )
+
+        } catch (error) {
+            console.log("Appwrite Service:: addUserToDatabase :: error:",error)
+        }
+    }
+
 
 }
 const authService = new AuthService()
