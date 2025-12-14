@@ -35,13 +35,13 @@ function App() {
   return !loading ? 
   (<div className="bg-opacity-50 min-h-screen bg-zinc-900 flex flex-wrap content-between">
     <div className='w-full block'>
-      <Header/>
-      <main>
-        {/* TODO: <Outlet/> */}
-        <ToastContainer/>
-        <Outlet/>
-      </main>
-      <Footer/>
+        <Header/>
+        <main>
+            {/* TODO: <Outlet/> */}
+            <ToastContainer/>
+            <Outlet/>
+        </main>
+        <Footer/>
     </div>
   </div>) 
   : 
