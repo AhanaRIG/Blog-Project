@@ -103,7 +103,7 @@ const Header = () => {
                     // <ul className='w-full md:w-auto md:flex-row flex-col flex ml-auto'>
                     <ul>
                     <div className='bg-slate-900
-                    w-[200px] rounded-xl absolute top-[3.1rem]  translate-x-6 duration-200 py-4 right-10 '>
+                    w-[200px] rounded-xl absolute top-[3.1rem] translate-x-6 duration-200 py-4 right-10 '>
                     {navItems.map((item) => 
                         item.active ? 
                         (<li key={item.name}>
