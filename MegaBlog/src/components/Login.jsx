@@ -16,10 +16,10 @@ function Login() {
     const [error,setError] = useState("")
     const [isLoggedIn, setLoggedIn] = useState(false)
     
-    const notify = () => {
-        toast("Login Successful")
-        // toast.success("Login Successful 🎉", { autoClose: 3000 });
-    }
+    // const notify = () => {
+    //     toast("Login Successful")
+    //     // toast.success("Login Successful 🎉", { autoClose: 3000 });
+    // }
 
     const login = async(data) => {
         setLoggedIn(true)
@@ -31,7 +31,8 @@ function Login() {
                 if(userData){
                     // authLogin is the login action inside authslice.
                     // login is named as authLogin in above import.
-                    dispatch(authLogin(userData))
+                    dispatch(authLogin(userData));
+                    toast("Login Successful")
                     // window.location.reload();
                     // //reload added to render edit and delete button immediately after login
                     // setLoggedIn(true)
@@ -54,7 +55,7 @@ function Login() {
         <div className={`mx-auto w-full max-w-lg bg-gray-100 
         rounded-xl p-10 border-black/10 `}>
             <div className='mb-2 flex justify-center'>
-                <span className='inline-block w-full max-w-[100px] '>
+                <span className='inline-block max-w-[100px] '>
                     <Logo width="100%" />
                 </span>
             </div>
@@ -101,7 +102,9 @@ function Login() {
                         })
                         }
                     />
-                    <Button onClick={notify} type = "submit" className="w-full">
+                    <Button 
+                    // onClick={notify}
+                     type = "submit" className="w-full">
                         {isLoggedIn? "Signing in" : "Sign in"}
                     </Button>
                     

@@ -15,11 +15,13 @@ export default function PostForm({ post }) {
         slug: post?.$id || "",
         content: post?.content || "",
         status: post?.status || "active",
+        // userName: post?.userName || "not mentioned"  
       },
     });
 
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
+    //console.log("userdata", userData)
 
   const submit = async (data) => {
     setIsSubmitting(true);
@@ -48,8 +50,9 @@ export default function PostForm({ post }) {
         data.featuredImage = fileId;
         const dbPost = await appwriteService.createPost({
           ...data,
-          userId: userData.$id,
+          userId: userData.$id
         });
+        // console.log("           ",userData.$id)
 
         if (dbPost) {
           navigate(`/post/${dbPost.$id}`);

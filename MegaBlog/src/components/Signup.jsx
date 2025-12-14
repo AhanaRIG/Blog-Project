@@ -15,12 +15,13 @@ function Signup() {
     const create = async(data) => {
         setError("")
         try {
-            const userData = await authService.createAccount(data)
-            if (userData){
-                const userData = await authService.getCurrentUser()
-                if (userData){
-                    dispatch(login(userData))
+            const session = await authService.createAccount(data)
+            if (session){
+                const currentUser = await authService.getCurrentUser()
+                if (currentUser){
+                    dispatch(login(currentUser))
                 }
+                await authService.addUserToDatabase(currentUser.$id,currentUser.name, currentUser.email)
                 navigate("/")
             }
         }
@@ -29,10 +30,10 @@ function Signup() {
         }
     }
   return (
-    <div className='flex items-center justify-center'>
+    <div className='flex items-center justify-cente'>
         <div className = {`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
-            <div className='mb-2 flex justify-center'>
-                <span className='inline-block w-full max-w-[100px]'>
+            <div className='mb-2 flex justify-center '>
+                <span className='inline-block  max-w-[100px]'>
                     <Logo width="100%"/>
                 </span>
             </div>
@@ -44,7 +45,7 @@ function Signup() {
                 Already have an account?&nbsp;
                 <Link 
                     to = "/login"
-                    className='font-medium text-primary transition-all duration-200 hover:underline'
+                    className='font-bold text-primary transition-all duration-200 hover:underline text-[#74096d]'
                 >
                 Sign in
             </Link>
@@ -52,7 +53,7 @@ function Signup() {
             {error && <p className='text-red-600 mt-8 text-center'>{error}</p>}
 
             <form onSubmit={handleSubmit(create)}>
-                <div className='space-y-5'>
+                <div className='space-y-5 mt-5'>
                     <Input
                         label = "Full Name: "
                         placeholder = "Enter your full name:"
